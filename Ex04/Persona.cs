@@ -18,31 +18,43 @@ namespace Ex04
 
         public Persona()
         {
-            Dni = "000000000A";
-            Sexo = 'H';
+            Dni = generaDNI() + lletraDNI();
         }
 
         public Persona(string nom, int edad, char sexo)
         {
-            Dni = "000000000A";
+            
             this.Nombre = nom;
             this.Edad = edad;
             this.Sexo = sexo;
         }
-        public Persona(string nom, int edad, char sexo, string dni,double peso, double altura)
-        {          
+        public Persona(string nom, int edad, char sexo, double peso, double altura)
+        {
             this.Nombre = nom;
             this.Edad = edad;
-            this.Sexo = sexo;
-            this.dni = dni;
+            this.Sexo = sexo;            
             this.peso = peso;
             this.altura = altura;
         }
 
         public string Nombre { get => nombre; set => nombre = value; }
         public int Edad { get => edad; set => edad = value; }
-        public string Dni { get => dni; set => dni = value; }
-        public char Sexo { get => sexo; set => sexo = value; }
+        public string Dni
+        {
+            get => dni;
+            set => dni = generaDNI() + lletraDNI();
+        }
+        public char Sexo
+        {
+            get { return sexo; }
+            set
+            {
+                if (value != 'H' || value != 'M')
+                    sexo = 'H';
+                else
+                    sexo = value;
+            }
+        }
         public double Peso { get => peso; set => peso = value; }
         public double Altura { get => altura; set => altura = value; }
 
@@ -51,7 +63,7 @@ namespace Ex04
         {
             int resultat;
 
-            double massa = peso/(altura * altura);
+            double massa = peso / (altura * altura);
 
             if (massa < 20)
                 resultat = -1;
@@ -82,6 +94,34 @@ namespace Ex04
         {
             ValidarSexo(sexo);
             Console.WriteLine($"{nombre},{edad},{sexo},{dni},{peso},{altura}");
+        }
+
+        public string generaDNI()
+        {
+            string numero = "";
+            Random rnd = new Random();
+            for (int i = 0; i < 8; i++)
+            {
+
+                numero += rnd.Next(1, 9);
+
+            }
+
+
+            return numero;
+        }
+        
+        private string lletraDNI()
+        {
+           int numero = Convert.ToInt32(generaDNI());
+            int modul = numero % 23;
+
+            string[] lletres = { "T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E" };
+
+            string lletraDNI = lletres[modul];
+
+            return lletraDNI;
+
         }
     }
 }
