@@ -103,7 +103,7 @@ namespace Ex04
             for (int i = 0; i < 8; i++)
             {
 
-                numero += rnd.Next(1, 9);
+                numero += rnd.Next(1, 10);
 
             }
 
